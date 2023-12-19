@@ -1,0 +1,31 @@
+name: Deploy Site
+
+on:
+ push:
+   branches: [ master ]
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v3
+       with:
+         persist-credentials: false # false 是用 personal token，true 是使用 GitHub token
+         fetch-depth: 0
+     - name: Commit and Push
+       working-directory: docs
+       run:
+
+          git init
+
+          git checkout -b gh-pages
+
+          git add -A 
+
+          git -c user.name='ericyuan2030' -c user.email='859797471@qq.com' commit -m 'commit' 
+
+          git remote add origin https://${{secrets.NEVER_SETTLE2}}@github.com/ericyuan2030/never-settle.git
+
+
+          git push origin gh-pages -f -q
